@@ -34,7 +34,7 @@ import net.miginfocom.swing.MigLayout;
 
 public class BankApplication extends JFrame {
 	
-	//ArrayList<BankAccount> accountList = new ArrayList<BankAccount>();
+	ArrayList<BankAccount> accountList = new ArrayList<BankAccount>();
 	static HashMap<Integer, BankAccount> table = new HashMap<Integer, BankAccount>();
 	private final static int TABLE_SIZE = 29;
 	static private final String newline = "\n";
@@ -227,20 +227,31 @@ public class BankApplication extends JFrame {
 				saveOpenValues();
 				
 				currentItem=0;
-				if(!table.isEmpty())
-				{
 				while(!table.containsKey(currentItem)){
 					currentItem++;
 				}
 				displayDetails(currentItem);
-				}
 			}
 		};
 		
-
-		ActionListener next = new ActionListener(){
+		ActionListener next = new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				saveOpenValues();
+				// No next if at end of list.
+				if (currentItem != (table.size()-1)) {
+					// Move to next item.
+						currentItem++;
+					while(!table.containsKey(currentItem) ){
+						currentItem++;
+					}
+					displayDetails(currentItem);			
+				}				
+			}
+		};
+		
+		ActionListener next1 = new ActionListener(){
 			public void actionPerformed(ActionEvent e){
-				int maxKey =0;
+				
 				ArrayList<Integer> keyList = new ArrayList<Integer>();
 				int i=0;
 		
@@ -250,11 +261,8 @@ public class BankApplication extends JFrame {
 						keyList.add(i);
 				}
 				
-				if(!keyList.isEmpty())
-				{
-			     maxKey = Collections.max(keyList);
-				
-				
+				int maxKey = Collections.max(keyList);
+		
 				saveOpenValues();	
 		
 					if(currentItem<maxKey){
@@ -263,9 +271,8 @@ public class BankApplication extends JFrame {
 							currentItem++;
 						}
 					}
-					if(table.get(currentItem)!=null)
 					displayDetails(currentItem);			
-			}}
+			}
 		};
 		
 		
@@ -282,8 +289,6 @@ public class BankApplication extends JFrame {
 						keyList.add(i);
 				}
 				
-				if(!keyList.isEmpty())
-				{
 				int minKey = Collections.min(keyList);
 				//System.out.println(minKey);
 				
@@ -296,7 +301,6 @@ public class BankApplication extends JFrame {
 				}
 				displayDetails(currentItem);				
 			}
-			}
 		};
 	
 		ActionListener last = new ActionListener() {
@@ -305,17 +309,17 @@ public class BankApplication extends JFrame {
 				
 				currentItem =29;
 								
-				while(!table.containsKey(currentItem)&& currentItem !=0){
+				while(!table.containsKey(currentItem)){
 					currentItem--;
 					
 				}
-				if(table.get(currentItem)!=null)
+				
 				displayDetails(currentItem);
 			}
 		};
 		
-		nextItemButton.addActionListener(next);
-		nextItem.addActionListener(next);
+		nextItemButton.addActionListener(next1);
+		nextItem.addActionListener(next1);
 		
 		prevItemButton.addActionListener(prev);
 		prevItem.addActionListener(prev);
@@ -566,10 +570,9 @@ public class BankApplication extends JFrame {
 		if (openValues){
 			surnameTextField.setEditable(false);
 			firstNameTextField.setEditable(false);
-
+				
 			table.get(currentItem).setSurname(surnameTextField.getText());
 			table.get(currentItem).setFirstName(firstNameTextField.getText());
-			
 		}
 	}	
 	
