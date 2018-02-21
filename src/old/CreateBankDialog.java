@@ -176,26 +176,24 @@ public class CreateBankDialog extends JFrame {
 							for (Map.Entry<Integer, BankAccount> entry : table.entrySet()) {					
 								 if(entry.getValue().getAccountNumber().trim().equals(accountNumberTextField.getText())){
 									 accNumTaken=true;	
-									 
-								 }
-							 }
-						
-						if(!accNumTaken){
-						
-						
-							BankAccount account = new BankAccount(randNumber, accountNumber, surname, firstName, accountType, 0.0, 0.0);
-						
-							
+
+							}
+						}
+
+						if (!accNumTaken) {
+
+							BankAccount account = new BankAccount(randNumber, accountNumber, surname, firstName,
+									accountType, 0.0, 0.0);
+
 							int key = Integer.parseInt(account.getAccountNumber());
-							
-							int hash = (key%TABLE_SIZE);
-							
-							while(table.containsKey(hash)){
-								hash = hash+1;
+
+							int hash = (key % TABLE_SIZE);
+
+							while (table.containsKey(hash)) {
+								hash = hash + 1;
 							}
 							table.put(hash, account);
-						}
-						else{
+						} else {
 							JOptionPane.showMessageDialog(null, "Account Number must be unique");
 						}
 					}
