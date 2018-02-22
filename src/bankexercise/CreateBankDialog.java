@@ -168,6 +168,7 @@ public class CreateBankDialog extends JFrame {
 									table.put(key, account);
 									success = true;
 								}
+								key++;
 							}
 
 						} else {

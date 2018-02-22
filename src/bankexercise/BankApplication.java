@@ -223,15 +223,11 @@ public class BankApplication extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 
 				saveOpenValues();
-
-				currentItem = 0;
-				if (!table.isEmpty()) {
-					while (!table.containsKey(currentItem)) {
-						currentItem++;
-					}
-					displayDetails(currentItem);
+				firstItem();			
+				displayDetails(currentItem);
+				
 				}
-			}
+			
 		};
 
 		ActionListener next = new ActionListener() {
@@ -270,9 +266,10 @@ public class BankApplication extends JFrame {
 				int i = 0;
 
 				while (i < TABLE_SIZE) {
-					i++;
+					
 					if (table.containsKey(i))
 						keyList.add(i);
+					i++;
 				}
 
 				if (!keyList.isEmpty()) {
@@ -324,10 +321,7 @@ public class BankApplication extends JFrame {
 				table.remove(currentItem);
 				JOptionPane.showMessageDialog(null, "Account Deleted");
 
-				currentItem = 0;
-				while (!table.containsKey(currentItem)) {
-					currentItem++;
-				}
+				firstItem();
 				displayDetails(currentItem);
 
 			}
@@ -745,12 +739,65 @@ public class BankApplication extends JFrame {
 		table.put(hash, value);
 
 	}
+	
+	private void firstItem()
+	{		
+		currentItem = 0;
+		
+		if (table.get(currentItem) == null && !table.isEmpty()) {
+			while (!table.containsKey(currentItem)) {
+				currentItem++;
+			}
+		}	
+	}
+	
 
 	public static void main(String[] args) {
 		BankApplication ba = new BankApplication();
 		ba.setSize(1200, 400);
 		ba.pack();
 		ba.setVisible(true);
+		
+		BankAccount account = new BankAccount(1, "11111111", "a", "a",
+				"credit", 0.0, 0.0);
+		BankAccount account2 = new BankAccount(2, "22222222", "b", "b",
+				"credit", 0.0, 0.0);
+		BankAccount account3 = new BankAccount(3, "33333333", "c", "c",
+				"credit", 0.0, 0.0);
+		
+		int key = 0;
+		boolean success = false;
+
+		while (success == false) {
+			if (table.get(key) == null) {
+				table.put(key, account);
+				success = true;
+			}
+			key++;
+		}
+		
+		key = 0;
+		success = false;
+
+		while (success == false) {
+			if (table.get(key) == null) {
+				table.put(key, account2);
+				success = true;
+			}
+			key++;
+		}
+		
+		key = 0;
+		success = false;
+
+		while (success == false) {
+			if (table.get(key) == null) {
+				table.put(key, account3);
+				success = true;
+			}
+			key++;
+		}
+		
 	}
 
 }
