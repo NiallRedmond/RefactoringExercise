@@ -279,7 +279,7 @@ public class BankApplication extends JFrame {
 					if (currentItem > minKey) {
 						currentItem--;
 						while (!table.containsKey(currentItem)) {
-							// System.out.println("Current: " + currentItem + ", min key: " + minKey);
+					
 							currentItem--;
 						}
 					}
@@ -384,10 +384,7 @@ public class BankApplication extends JFrame {
 		open.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				readFile();
-				currentItem = 0;
-				while (!table.containsKey(currentItem)) {
-					currentItem++;
-				}
+				firstItem();
 				displayDetails(currentItem);
 			}
 		});
@@ -756,48 +753,7 @@ public class BankApplication extends JFrame {
 		BankApplication ba = new BankApplication();
 		ba.setSize(1200, 400);
 		ba.pack();
-		ba.setVisible(true);
-		
-		BankAccount account = new BankAccount(1, "11111111", "a", "a",
-				"credit", 0.0, 0.0);
-		BankAccount account2 = new BankAccount(2, "22222222", "b", "b",
-				"credit", 0.0, 0.0);
-		BankAccount account3 = new BankAccount(3, "33333333", "c", "c",
-				"credit", 0.0, 0.0);
-		
-		int key = 0;
-		boolean success = false;
-
-		while (success == false) {
-			if (table.get(key) == null) {
-				table.put(key, account);
-				success = true;
-			}
-			key++;
-		}
-		
-		key = 0;
-		success = false;
-
-		while (success == false) {
-			if (table.get(key) == null) {
-				table.put(key, account2);
-				success = true;
-			}
-			key++;
-		}
-		
-		key = 0;
-		success = false;
-
-		while (success == false) {
-			if (table.get(key) == null) {
-				table.put(key, account3);
-				success = true;
-			}
-			key++;
-		}
-		
+		ba.setVisible(true);		
 	}
 
 }
